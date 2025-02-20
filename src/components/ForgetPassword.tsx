@@ -25,8 +25,13 @@ const ForgotPassword = () => {
 
       setStep("code"); // Move to next step
       setMessage("A verification code has been sent to your email.");
-    } catch (error: any) {
-      setMessage(error.errors?.[0]?.message || "Failed to send reset email.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const errorMessage = (error as { errors?: { message: string }[] }).errors?.[0]?.message || "Failed to send reset email.";
+        setMessage(errorMessage);
+      } else {
+        setMessage("Failed to send reset email.");
+      }
     }
   };
 
@@ -48,8 +53,13 @@ const ForgotPassword = () => {
           setTimeout(() => navigate("/login"), 2000);
         });
       }
-    } catch (error: any) {
-      setMessage(error.errors?.[0]?.message || "Failed to reset password.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const errorMessage = (error as { errors?: { message: string }[] }).errors?.[0]?.message || "Failed to reset password.";
+        setMessage(errorMessage);
+      } else {
+        setMessage("Failed to reset password.");
+      }
     }
   };
 

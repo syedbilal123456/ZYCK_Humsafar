@@ -29,9 +29,12 @@ const Signup: React.FC = () => {
   const [code, setCode] = useState("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
+    const checked = e.target instanceof HTMLInputElement ? e.target.checked : false;
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
@@ -55,9 +58,22 @@ const Signup: React.FC = () => {
 
       await signUp.prepareEmailAddressVerification();
       setPendingVerification(true);
-    } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Signup failed.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Signup failed.");
+      } else {
+        setError("Signup failed.");
+      }
     }
+  };
+
+  const handleGoogleSignup = async () => {
+    if (!isLoaded) return;
+    await signUp.authenticateWithRedirect({
+      strategy: "oauth_google",
+      redirectUrl: "/oauth-callback",
+      redirectUrlComplete: "/",
+    });
   };
 
   const handleVerify = async (e: React.FormEvent) => {
@@ -65,21 +81,29 @@ const Signup: React.FC = () => {
     if (!isLoaded) return;
 
     try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({ code });
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
 
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
         navigate("/");
       }
-    } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Verification failed.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Verification failed.");
+      } else {
+        setError("Verification failed.");
+      }
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-3xl font-bold text-center text-pink-600 mb-6">Create an Account</h1>
+        <h1 className="text-3xl font-bold text-center text-pink-600 mb-6">
+          Create an Account
+        </h1>
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         {!pendingVerification ? (
@@ -231,18 +255,35 @@ const Signup: React.FC = () => {
                 required
               />
               <span className="text-sm">
-                I agree to the <a href="#" className="text-pink-600">terms and conditions</a>.
+                I agree to the{" "}
+                <a href="#" className="text-pink-600">
+                  terms and conditions
+                </a>
+                .
               </span>
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="w-full bg-pink-600 text-white p-3 rounded hover:bg-pink-700">
+            <button
+              type="submit"
+              className="w-full bg-pink-600 text-white p-3 rounded hover:bg-pink-700"
+            >
               Sign Up
+            </button>
+
+            <button
+              onClick={handleGoogleSignup}
+              className="w-full bg-pink-600 text-white p-3 rounded mt-1 hover:bg-pink-700"
+            >
+              Sign Up with Google
             </button>
 
             {/* Already Have an Account */}
             <p className="text-center text-sm mt-4">
-              Already have an account? <a href="/login" className="text-pink-600">Log in</a>
+              Already have an account?{" "}
+              <a href="/login" className="text-pink-600">
+                Log in
+              </a>
             </p>
           </form>
         ) : (
@@ -254,7 +295,10 @@ const Signup: React.FC = () => {
               onChange={(e) => setCode(e.target.value)}
               required
             />
-            <button type="submit" className="w-full bg-green-600 text-white p-3 rounded">
+            <button
+              type="submit"
+              className="w-full bg-green-600 text-white p-3 rounded"
+            >
               Verify Email
             </button>
           </form>

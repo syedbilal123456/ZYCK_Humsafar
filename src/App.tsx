@@ -13,6 +13,7 @@ import Signup from "./pages/register/SignUp";
 import Login from "./pages/login/Login";
 import ForgotPassword from "./components/ForgetPassword";
 import ResetPassword from "./components/ResetPassword";
+import OAuthCallback from "./components/OAuthCallBack";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           {/* Clerk Authentication Routes */}
           <Route path="/register" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/oauth-callback" element={<OAuthCallback />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
 

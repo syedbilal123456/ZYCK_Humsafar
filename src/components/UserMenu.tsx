@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useUser, useSignOut } from "@clerk/clerk-react";
+import { useUser, useClerk } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 
 const UserMenu: React.FC = () => {
   const { user } = useUser();
-  const { signOut } = useSignOut();
+  const { signOut } = useClerk();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 

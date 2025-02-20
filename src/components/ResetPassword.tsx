@@ -24,8 +24,10 @@ const ResetPassword = () => {
         setMessage("Password reset successful! Redirecting to login...");
         setTimeout(() => navigate("/login"), 2000);
       }
-    } catch (error: any) {
-      setMessage(error.errors?.[0]?.message || "Failed to reset password.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage((error as { errors?: { message?: string }[] }).errors?.[0]?.message || "Failed to reset password.");
+      }
     }
   };
 

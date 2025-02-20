@@ -11,6 +11,8 @@ import RishtaConsultants from "./pages/rishtaconsultants/RishtaConsultants";
 import Layout from "./components/Layout";
 import Signup from "./pages/register/SignUp";
 import Login from "./pages/login/Login";
+import ForgotPassword from "./components/ForgetPassword";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           {/* Clerk Authentication Routes */}
           <Route path="/register" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
           {/* Protected Routes (Only accessible when signed in) */}
           <Route

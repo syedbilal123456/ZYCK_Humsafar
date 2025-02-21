@@ -1,18 +1,29 @@
-import { Check, Crown, Sparkles } from 'lucide-react';
+import { Check, Crown, Sparkles } from "lucide-react";
 
-const PricingCard = ({ 
-  title, 
-  price, 
-  description, 
-  features, 
+interface PricingCardProps {
+  title: string;
+  price: string;
+  description: string;
+  features: string[];
+  isPopular?: boolean;
+  ctaText?: string;
+}
+
+const PricingCard: React.FC<PricingCardProps> = ({
+  title,
+  price,
+  description,
+  features,
   isPopular = false,
-  ctaText = "Get Started"
+  ctaText = "Get Started",
 }) => (
-  <div className={`relative rounded-3xl p-8 transition-all duration-300 hover:scale-105 hover:shadow-2xl ${
-    isPopular 
-      ? 'bg-gradient-to-br from-pink-500 to-pink-700 text-white shadow-xl' 
-      : 'bg-white hover:border-pink-300 border-2 border-transparent'
-  }`}>
+  <div
+    className={`relative rounded-3xl p-8 transition-all duration-300 hover:scale-105 hover:shadow-2xl ${
+      isPopular
+        ? "bg-gradient-to-br from-pink-500 to-pink-700 text-white shadow-xl"
+        : "bg-white hover:border-pink-300 border-2 border-transparent"
+    }`}
+  >
     {isPopular && (
       <div className="absolute -top-4 left-1/2 -translate-x-1/2">
         <span className="bg-white text-pink-600 px-6 py-1.5 rounded-full text-sm font-medium flex items-center gap-1.5 shadow-lg">
@@ -22,32 +33,59 @@ const PricingCard = ({
     )}
     <div className="space-y-6">
       <div className="space-y-2">
-        <h3 className={`text-2xl font-bold ${isPopular ? 'text-white' : 'text-gray-900'}`}>{title}</h3>
-        <p className={`text-sm ${isPopular ? 'text-pink-100' : 'text-gray-600'}`}>{description}</p>
+        <h3
+          className={`text-2xl font-bold ${
+            isPopular ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {title}
+        </h3>
+        <p
+          className={`text-sm ${isPopular ? "text-pink-100" : "text-gray-600"}`}
+        >
+          {description}
+        </p>
       </div>
       <div className="flex items-baseline">
-        <span className={`text-6xl font-bold tracking-tight ${isPopular ? 'text-white' : 'text-gray-900'}`}>
+        <span
+          className={`text-6xl font-bold tracking-tight ${
+            isPopular ? "text-white" : "text-gray-900"
+          }`}
+        >
           ${price}
         </span>
-        <span className={`ml-2 text-sm ${isPopular ? 'text-pink-100' : 'text-gray-500'}`}>/month</span>
+        <span
+          className={`ml-2 text-sm ${
+            isPopular ? "text-pink-100" : "text-gray-500"
+          }`}
+        >
+          /month
+        </span>
       </div>
       <ul className="space-y-4 py-6">
         {features.map((feature, index) => (
           <li key={index} className="flex items-center gap-3">
-            <Check className={`${
-              isPopular ? 'text-pink-200' : 'text-pink-500'
-            }`} size={20} />
-            <span className={`text-sm ${
-              isPopular ? 'text-pink-100' : 'text-gray-600'
-            }`}>{feature}</span>
+            <Check
+              className={`${isPopular ? "text-pink-200" : "text-pink-500"}`}
+              size={20}
+            />
+            <span
+              className={`text-sm ${
+                isPopular ? "text-pink-100" : "text-gray-600"
+              }`}
+            >
+              {feature}
+            </span>
           </li>
         ))}
       </ul>
-      <button className={`w-full py-4 px-6 rounded-2xl font-medium transition-all duration-300 ${
-        isPopular 
-          ? 'bg-white text-pink-600 hover:bg-pink-50 shadow-lg' 
-          : 'bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-pink-200 shadow-lg hover:shadow-xl'
-      }`}>
+      <button
+        className={`w-full py-4 px-6 rounded-2xl font-medium transition-all duration-300 ${
+          isPopular
+            ? "bg-white text-pink-600 hover:bg-pink-50 shadow-lg"
+            : "bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-pink-200 shadow-lg hover:shadow-xl"
+        }`}
+      >
         {ctaText}
       </button>
     </div>
@@ -65,8 +103,8 @@ function Pricing() {
         "Unlimited revisions",
         "48-hour delivery",
         "Source files included",
-        "Commercial license"
-      ]
+        "Commercial license",
+      ],
     },
     {
       title: "Pro Design",
@@ -79,9 +117,9 @@ function Pricing() {
         "Source files included",
         "Commercial license",
         "Custom illustrations",
-        "Brand guidelines"
+        "Brand guidelines",
       ],
-      isPopular: true
+      isPopular: true,
     },
     {
       title: "Business",
@@ -95,9 +133,9 @@ function Pricing() {
         "Commercial license",
         "Custom illustrations",
         "Brand guidelines",
-        "Dedicated designer"
-      ]
-    }
+        "Dedicated designer",
+      ],
+    },
   ];
 
   return (
@@ -111,11 +149,11 @@ function Pricing() {
             </h2>
           </div>
           <p className="text-gray-600 text-xl max-w-2xl mx-auto">
-            Get unlimited design possibilities with our flexible pricing plans. 
+            Get unlimited design possibilities with our flexible pricing plans.
             Start your creative journey today.
           </p>
         </div>
-        
+
         <div className="grid lg:grid-cols-3 gap-10 max-w-6xl mx-auto px-4">
           {plans.map((plan, index) => (
             <PricingCard key={index} {...plan} />
@@ -124,8 +162,11 @@ function Pricing() {
 
         <div className="mt-20 text-center">
           <p className="text-gray-600 text-lg">
-            Need a custom solution?{' '}
-            <a href="#" className="text-pink-600 font-medium hover:text-pink-700 underline decoration-2 decoration-pink-200 hover:decoration-pink-500 transition-all">
+            Need a custom solution?{" "}
+            <a
+              href="#"
+              className="text-pink-600 font-medium hover:text-pink-700 underline decoration-2 decoration-pink-200 hover:decoration-pink-500 transition-all"
+            >
               Let's talk about your project
             </a>
           </p>

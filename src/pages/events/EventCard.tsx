@@ -1,6 +1,23 @@
 import { Calendar, MapPin, Clock, Users, ArrowRight, Share2, Bookmark } from 'lucide-react';
 import { useState } from 'react';
-const EventCard = ({ event }) => {
+
+interface Event {
+  image: string;
+  title: string;
+  description: string;
+  category: string;
+  date: string;
+  time: string;
+  location: string;
+  attendees: number;
+  price: string;
+}
+
+interface EventCardProps {
+  event: Event;
+}
+
+const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
@@ -71,4 +88,4 @@ const EventCard = ({ event }) => {
   );
 };
 
-export default EventCard
+export default EventCard;

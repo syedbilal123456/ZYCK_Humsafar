@@ -1,6 +1,18 @@
 import { Phone, Mail, MapPin, Star, Calendar, Users, MessageCircle, CheckCircle } from 'lucide-react';
 
-const ConsultantCard = ({ consultant }) => (
+interface Consultant {
+  id: number;
+  name: string;
+  location: string;
+  experience: string;
+  matches: string;
+  rating: number;
+  reviewCount: number;
+  specialization: string[];
+  image: string;
+}
+
+const ConsultantCard = ({ consultant }: { consultant: Consultant }) => (
   <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-pink-100 group">
     <div className="relative">
       <img 

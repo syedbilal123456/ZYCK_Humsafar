@@ -1,7 +1,19 @@
 import { useState } from 'react';
 import { Heart, MapPin, GraduationCap, Briefcase, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 
-const ProfileCard = ({ profile }) => (
+interface Profile {
+  id: number;
+  name: string;
+  age: string;
+  height: string;
+  location: string;
+  education: string;
+  profession: string;
+  maritalStatus: string;
+  image: string;
+}
+
+const ProfileCard = ({ profile }: { profile: Profile }) => (
   <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-pink-100">
     <div className="relative">
       <img 

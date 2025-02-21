@@ -1,4 +1,10 @@
-const TeamMember = ({name, image, role}) => {
+interface TeamMemberProps {
+  name: string,
+  image: string,
+  role: string
+}
+
+const TeamMember : React.FC<TeamMemberProps> = ({name, image, role}) => {
   return (
     <div className="text-center">
       <img
